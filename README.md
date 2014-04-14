@@ -3,6 +3,8 @@ play-with-pdf
 
 Using DOMPDF + TORO requests for some basic HTML -> PDF playing around
 
+![Example Usage](images/pdf-requests-test.gif "Example Usage")
+
 ## Usage
 
 1. ``$ git clone https://github.com/tareiking/play-with-pdf.git my-project``
