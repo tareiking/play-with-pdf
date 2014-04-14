@@ -6,21 +6,10 @@ define('DOMPDF_ENABLE_AUTOLOAD', false);
 
 require_once 'vendor/dompdf/dompdf/dompdf_config.inc.php';
 
-// $html =  '<html><body>'.
-// 		 '<p>Put your html here, or generate it with your favourite '.
-// 		 'templating system.</p>'.
-// 		 '</body></html>';
-
-// DomPDF
-// $dompdf = new DOMPDF();
-// $dompdf->load_html($html);
-// $dompdf->render();
-// $dompdf->stream("sample.pdf");
-
 // $response = Requests::post('http://localhost/pdf-requests/index.php/');
 // var_dump($response->body);
 
-function make_pdf( $html ){
+function make_pdf( $html, $view_in_browser = false ){
 	if ( ! $html ) {
 		echo 'no content in $html';
 		return;
@@ -29,14 +18,21 @@ function make_pdf( $html ){
 	$dompdf = new DOMPDF();
 	$dompdf->load_html($html);
 	$dompdf->render();
+
+	if ( $view_in_browser ) {
+		$dompdf->stream("welcome.pdf", array("Attachment" => 0)); 
+		return;
+	}
+
 	$dompdf->stream("sample.pdf");	
 }
 
-class MainHandler {
+class PDFHandler {
     function get() {
     	$form = 
 		'<form action="" method="post">
 			<textarea name="html" id="html" cols="30" rows="10"></textarea>
+			<input type="checkbox" name="view_in_browser" value="checked">View in Browser?
 			<input type="submit">
 		</form>';
 
@@ -45,11 +41,14 @@ class MainHandler {
 
     function post(){
     	$html = $_POST['html'];    	
-    	
-    	if ( make_pdf( $html ) );
+
+    	if ( isset( $_POST['view_in_browser'] ) && $_POST[ 'view_in_browser' ] == "checked") {
+    		make_pdf( $html, true );
+    	}
+    	else { make_pdf( $html ); }
     }
 }
 
 Toro::serve(array(
-    "/" => "MainHandler"
+    "/" => "PDFHandler"
 ));
