@@ -10,3 +10,5 @@ Using DOMPDF + TORO requests for some basic HTML -> PDF playing around
 ``$ php composer.phar install``
 
 Then navigate to ../my-project/index.php/ and fill in the form to get your PDF
+
+![Example Usage](images/pdf-requests-test.gif "Example Usage")
