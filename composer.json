@@ -1,0 +1,7 @@
+{
+  "require" : {
+    "dompdf/dompdf" : "0.6.*",
+    "rmccue/requests": ">=1.0",
+    "torophp/torophp": "dev-master"
+  }
+}
